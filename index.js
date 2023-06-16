@@ -51,8 +51,8 @@ async function run(num) {
             const url = res.url();
             if (url.includes("https://global.apis.naver.com/rmcnmv/rmcnmv/")) {
                 console.log(url);
-                await browser.close();
                 console.log("==========")
+                // await browser.close();
                 file_url = url;
                 resolve(url)
             }
@@ -62,15 +62,15 @@ async function run(num) {
 
 let dictURL = {}
 async function fetch_vid_link(value) {
-    console.log("링크 주소", value);
+    // console.log("링크 주소", value);
 
     const response = await fetch(value);
     const result = await response.json();
-    console.log(result["videos"]["list"]);
+    // console.log(result["videos"]["list"]);
 
     const video_list = result["videos"]["list"];
     video_list.forEach((vid) => {
-        console.log(vid.encodingOption.name);
+        // console.log(vid.encodingOption.name);
         const opt = vid.encodingOption.name;
         dictURL[opt] = vid.source;
     });
@@ -87,7 +87,7 @@ app.get("/api/url/:num", async (req, res) => {
     const num = req.params.num;
 
     run(num).then(async (url) => {
-        console.log(num, url);
+        console.log("//////////////");
         const final = await fetch_vid_link(url)
         res.json({
             url: final,
